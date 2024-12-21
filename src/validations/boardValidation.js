@@ -7,14 +7,12 @@ const createNew = async (req, res, next) => {
     description: Joi.string().required().min(3).max(256).trim().strict(),
   });
   try {
-    console.log(req.body);
+    console.log("validation", req.body);
 
     //Chỉ định abortEarly: false để trường hợp có nhiều lỗi thì trả về tất cả
     await correctCondition.validateAsync(req.body, { abortEarly: false });
 
-    // next();
-
-    res.status(StatusCodes.CREATED).json({ message: "api post new board" });
+    next();
   } catch (error) {
     console.log(error);
 
