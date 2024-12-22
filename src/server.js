@@ -1,14 +1,9 @@
-/**
- * Updated by trungquandev.com's author on August 17 2023
- * YouTube: https://youtube.com/@trungquandev
- * "A bit of fragrance clings to the hand that gives flowers!"
- */
-
 import express from "express";
 import { CONNECT_DB, GET_DB } from "./config/mongodb";
 import exitHook from "async-exit-hook";
 import { env } from "./config/environment";
 import { APIs_V1 } from "./routes/v1";
+import { errorHandlingMiddleware } from "./middlewares/errorHandingMiddleware";
 
 const START_SERVER = () => {
   const app = express();
@@ -19,7 +14,8 @@ const START_SERVER = () => {
   //Use API V1
   app.use("/v1", APIs_V1);
 
-  //
+  //Middleware xử lý lỗi tập trung
+  app.use(errorHandlingMiddleware);
 
   app.listen(env.APP_PORT, env.APP_HOST, () => {
     console.log(

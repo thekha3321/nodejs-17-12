@@ -1,15 +1,11 @@
 import { StatusCodes } from "http-status-codes";
+import ApiError from "~/utils/ApiError";
 
 const createNew = async (req, res, next) => {
   try {
-    console.log("controller", req.body);
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: "api post from controller" });
+    throw new ApiError(200, "lỗi");
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ errors: error.message });
+    next(error);
   }
 };
 
